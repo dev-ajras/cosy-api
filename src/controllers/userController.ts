@@ -6,8 +6,13 @@ import { userService } from "../services/users-service";
 export async function registerUser(req: Request, res: Response){
     const { name, lastName, mail, password} = req.body;
     const data = {name, lastName, mail, password}
+    try {
     const newUser = await userService.registerUser(data)
     res.json(newUser);
+    } catch{
+        res.status(400).json({message: "No se pudo registrar el usuario."})
+    }
+    
 }
 
 export async function loginUser(req: Request, res: Response){

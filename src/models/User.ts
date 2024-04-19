@@ -1,4 +1,4 @@
-import { Table, Column, DataType, Model} from "sequelize-typescript";
+import { Table, Column, DataType, Model, Unique} from "sequelize-typescript";
 
 @Table({
     timestamps: true,
@@ -27,7 +27,8 @@ export default class User extends Model {
         allowNull: false,
     })
     lastName!: string;
-
+    
+    @Unique
     @Column({
         type: DataType.STRING,
         allowNull: false,
