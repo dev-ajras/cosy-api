@@ -8,7 +8,7 @@ export async function registerUser(req: Request, res: Response){
     const data = {name, lastName, mail, password}
     try {
     const newUser = await userService.registerUser(data)
-    res.json(newUser);
+    res.status(201).json(newUser);
     } catch{
         res.status(400).json({message: "No se pudo registrar el usuario."})
     }
