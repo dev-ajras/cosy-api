@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize-typescript"
 import User from "../../models/User";
+import Publication from "../../models/Publication";
 
 export const sequelize = new Sequelize({
     database: "cosy",
@@ -7,5 +8,5 @@ export const sequelize = new Sequelize({
     username: "admin",
     password: "admin",
     dialect: "postgres",
-    models: [User]
+    models: [User, Publication]
 });

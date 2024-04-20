@@ -4,8 +4,12 @@ import { userService } from "../services/users-service";
 
 
 export async function registerUser(req: Request, res: Response){
+    
     const { name, lastName, mail, password} = req.body;
     const data = {name, lastName, mail, password}
+    if (!name || !lastName || !mail || !password){
+        return res.status(400).json({message: "Hay campos incompletos en la solicitud."})
+    }
     try {
     const newUser = await userService.registerUser(data)
     res.status(201).json(newUser);
@@ -18,6 +22,9 @@ export async function registerUser(req: Request, res: Response){
 export async function loginUser(req: Request, res: Response){
     const { mail, password } = req.body;
     const data = { mail, password};
+    if (!mail || !password){
+        return res.status(400).json({message: "Ingrese su usuario y contraseña para acceder."});
+    }
     const credentials = await userService.loginUser(data);
     if (credentials == null){
         return res.status(400).json({message: "Usuario o contraseña incorrectos. "})
