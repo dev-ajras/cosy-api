@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/User";
 import { userService } from "../services/users-service";
+import { RequestWithUserId } from "../types";
 
 
 export async function registerUser(req: Request, res: Response){
@@ -20,6 +21,7 @@ export async function registerUser(req: Request, res: Response){
 }
 
 export async function loginUser(req: Request, res: Response){
+
     const { mail, password } = req.body;
     const data = { mail, password};
     if (!mail || !password){
@@ -32,31 +34,41 @@ export async function loginUser(req: Request, res: Response){
     res.json(credentials);
 }
 
-export async function getUsers (_: Request, res: Response){
-    const users = await User.findAll();
-    res.json(users);
-}
+export async function getProfile(req: RequestWithUserId, res: Response){
 
-export async function updateUser (req: Request, res: Response){
-    const { id } = req.params;
-    const { name, lastName, mail, password } = req.body;
-
-    const user = await User.findByPk(id);
-    if(!user){
-        return res.status(404).json({
-            error: "User not found"
-        });
+    const userId = req.userId!;
+    const profile = await userService.getProfile({id: userId})
+    if (profile === null){
+        return res.status(404).json({message: "No se encontro un perfil del usuario solicitado"});
     }
-
-    user.name = name;
-    user.lastName = lastName;
-    user.mail = mail;
-    user.password = password;
-
-    await user.save();
-    res.json(user);
+    res.json(profile);
 }
 
+export async function updateProfile( req: RequestWithUserId, res: Response){
+
+    const userId = req.userId!;
+    const profile = await User.findByPk(userId);
+    const { name, lastName, address, work, birthdate, school, genre, country, description } = req.body
+    if(!profile){
+        return res.status(404).json({
+            message: "Profile not found"
+        })
+    }
+    profile.name = name;
+    profile.lastName = lastName;
+    profile.address = address;
+    profile.work = work;
+    profile.birthdate = birthdate;
+    profile.school = school;
+    profile.genre = genre;
+    profile.country = country;
+    profile.description = description;
+    await profile.save();
+    res.json(profile);
+
+}
+
+// ejemplo
 export async function deleteUser (req: Request, res: Response){
     const { id } = req.params;
     const user = await User.findByPk(id);

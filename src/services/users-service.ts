@@ -19,7 +19,7 @@ export const userService = {
         const newUser = await User.create({
             name, lastName, mail, password: secretPassword
         })
-        return newUser;
+        return {name: newUser.name, mail: newUser.mail};
     },
 
     loginUser: async function ({mail, 
@@ -44,6 +44,26 @@ export const userService = {
             token: token,
             userId: user.id,
             username: user.name
+        }
+    },
+    
+    getProfile: async function ({id}:{id: number}){
+        const userProfile = await User.findOne({ where: {id: id}});
+        if(!userProfile){
+            return null;
+        }
+        const { name, lastName, address, work, birthdate, school, genre, country, description, profile_image } = userProfile
+        return {
+            name,
+            lastName,
+            address,
+            work,
+            birthdate,
+            school,
+            genre,
+            country,
+            description,
+            profile_image
         }
     }
 }
