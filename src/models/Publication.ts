@@ -23,7 +23,7 @@ export default class Publication extends Model {
     content!: string;
 
     @Column({
-        type: DataType.STRING,
+        type: DataType.TEXT,
         allowNull: true,
     })
     image!: string;
