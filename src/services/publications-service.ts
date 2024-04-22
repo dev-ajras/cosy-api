@@ -17,7 +17,7 @@ export const publicationService = {
     },
 
     getPublications: async function (){
-        const publications = await Publication.findAll({where: {isPublic: true}})
+        const publications = await Publication.findAll({where: {isPublic: true}, order: [["createdAt", "DESC"]]})
         const publicationsWithImageProfile = []
         for (const publication of publications){
           const user = await User.findByPk(publication.userId)
