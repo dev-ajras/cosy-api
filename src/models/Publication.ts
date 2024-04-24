@@ -1,6 +1,7 @@
 import { Table, Column, DataType, Model, ForeignKey, BelongsTo  } from "sequelize-typescript";
 import User from "./User";
 
+
 @Table({
     timestamps: true,
     tableName: "publications",
@@ -17,7 +18,7 @@ export default class Publication extends Model {
     declare id: number;
 
     @Column({
-        type: DataType.STRING,
+        type: DataType.TEXT,
         allowNull: false,
     })
     content!: string;
