@@ -19,9 +19,7 @@ export const userService = {
         password: String }) {
         const secretPassword = await bcrypt.hash(password as string, 10);
         const newUser = await User.create({
-            name, lastName, mail, password: secretPassword, profile_image: "/images/user.png",
-            background_image: "/images/background.jpg"
-        })
+            name, lastName, mail, password: secretPassword})
         return {name: newUser.name, mail: newUser.mail};
     },
 
