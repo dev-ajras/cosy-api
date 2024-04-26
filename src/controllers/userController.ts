@@ -48,7 +48,7 @@ export async function updateProfile( req: RequestWithUserId, res: Response){
 
     const userId = req.userId!;
     const profile = await User.findByPk(userId);
-    const { name, lastName, address, work, birthdate, school, genre, country, description } = req.body
+    const { name, lastName, address, work, birthdate, school, genre, country, description, profile_image, background_image } = req.body
     if(!profile){
         return res.status(404).json({
             message: "Profile not found"
@@ -63,56 +63,13 @@ export async function updateProfile( req: RequestWithUserId, res: Response){
     profile.genre = genre;
     profile.country = country;
     profile.description = description;
+    profile.profile_image = profile_image;
+    profile.background_image = background_image;
     await profile.save();
     res.json(profile);
 
 }
 
-export async function changeProfilePic(req: RequestWithUserId, res: Response){
-    
-    const image = req.file;
-    if (!image){
-        return res.status(400).json({message: "Debes seleccionar una imagen para utilizar como foto de perfil."})
-    }
-    try{
-        const imageName = await userService.saveProfileImage(image, req.userId as number);
-        if(!imageName){
-            return res.status(400).json({message: "Debes subir un archivo del tipo imagen."})
-        }
-        const user = await User.findByPk(req.userId)
-        if(user){
-            user.profile_image = imageName;
-            user.save();
-        }
-        return res.status(201).json({message: "Imagen de perfil modificada."})
-    }catch(err){
-        console.log(err)
-        return res.status(500).json({message: "Error en el servidor."});
-    }
-}
-
-
-export async function changeBackgroundPic(req: RequestWithUserId, res: Response){
-    const image = req.file;
-    if (!image){
-        return res.status(400).json({message: "Debes seleccionar una imagen para utilizar como fondo de perfil."})
-    }
-    try{
-        const imageName = await userService.saveBackgroundImage(image, req.userId as number);
-        if(!imageName){
-            return res.status(400).json({message: "Debes subir un archivo del tipo imagen."})
-        }
-        const user = await User.findByPk(req.userId)
-        if(user){
-            user.background_image = imageName;
-            user.save();
-        }
-        return res.status(201).json({message: "Imagen de perfil modificada."})
-    }catch(err){
-        console.log(err)
-        return res.status(500).json({message: "Error en el servidor."});
-    }
-}
 
 // ejemplo
 export async function deleteUser (req: Request, res: Response){

@@ -85,13 +85,15 @@ export default class User extends Model {
 
     @Column({
         type: DataType.TEXT,
-        allowNull: false
+        allowNull: false,
+        defaultValue: "https://cdn-icons-png.flaticon.com/512/149/149071.png"
     })
     profile_image!: string;
 
     @Column({
         type: DataType.TEXT,
-        allowNull: false
+        allowNull: false,
+        defaultValue: "https://p4.wallpaperbetter.com/wallpaper/650/47/795/hdr-fireplace-indoors-fire-wallpaper-preview.jpg"
     })
     background_image!: string;
 }

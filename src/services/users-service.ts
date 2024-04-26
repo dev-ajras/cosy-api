@@ -69,52 +69,6 @@ export const userService = {
             profile_image,
             background_image
         }
-    },
-
-    saveProfileImage: async function (image: any, id: number) {
-        const folderPath = `/usr/src/app/images/${id}`;
-        const allowedImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
-
-        const isValidImageType = function (mimetype: string) {
-            return allowedImageTypes.includes(mimetype);
-        };
-        if (!isValidImageType(image.mimetype)) {
-            return null;
-        }
-        const type = image.mimetype.split("/")[1];
-        const nameLocal = `/images/${id}/profile_picture.${type}`
-        const imagePath = path.join(folderPath, `profile_picture.${type}`);
-    
-        if (!fs.existsSync(folderPath)) {
-            fs.mkdirSync(folderPath, { recursive: true });
-        }
-    
-        fs.renameSync(image.path, imagePath);
-    
-        return nameLocal;
-    },
-
-    saveBackgroundImage: async function (image: any, id: number) {
-        const folderPath = `/usr/src/app/images/${id}`;
-        const allowedImageTypes = ['image/jpeg', 'image/png', 'image/webp'];
-
-        const isValidImageType = function (mimetype: string) {
-            return allowedImageTypes.includes(mimetype);
-        };
-        if (!isValidImageType(image.mimetype)) {
-            return null;
-        }
-        const type = image.mimetype.split("/")[1];
-        const nameLocal = `/images/${id}/background_picture.${type}`
-        const imagePath = path.join(folderPath, `background_picture.${type}`);
-    
-        if (!fs.existsSync(folderPath)) {
-            fs.mkdirSync(folderPath, { recursive: true });
-        }
-    
-        fs.renameSync(image.path, imagePath);
-    
-        return nameLocal;
     }
     
 }
