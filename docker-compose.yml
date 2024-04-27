@@ -15,5 +15,3 @@ services:
     image: my-node-app
     ports:
       - 13000:3000
-    volumes:
-      - ./src/images:/usr/src/app/images
