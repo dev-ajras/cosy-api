@@ -1,5 +1,6 @@
 import Publication from "../models/Publication"
 import User from "../models/User";
+import Comment from "../models/Comment";
 
 export const publicationService = {
 
@@ -22,6 +23,8 @@ export const publicationService = {
         for (const publication of publications){
           const user = await User.findByPk(publication.userId)
           const data: any = {}
+          data.id = publication.id
+          data.comments = await Comment.findAll({where: {publicationId: publication.id} })
           data.content = publication.content;
           data.image = publication.image;
           data.isPublic = publication.isPublic;
