@@ -1,6 +1,7 @@
 import Publication from "../models/Publication"
 import User from "../models/User";
 import Comment from "../models/Comment";
+import { commentService } from "./comments-service";
 
 export const publicationService = {
 
@@ -21,10 +22,15 @@ export const publicationService = {
         const publications = await Publication.findAll({where: {isPublic: true}, order: [["createdAt", "DESC"]]})
         const publicationsWithImageProfile = []
         for (const publication of publications){
-          const user = await User.findByPk(publication.userId)
           const data: any = {}
+          data.comments = []
+          const allComments = await Comment.findAll({where: {publicationId: publication.id} })
+            for(const comment of allComments){
+                const comm = await commentService.getComment({id: comment.id})
+                data.comments.push(comm)
+            }
+          const user = await User.findByPk(publication.userId)
           data.id = publication.id
-          data.comments = await Comment.findAll({where: {publicationId: publication.id} })
           data.content = publication.content;
           data.image = publication.image;
           data.isPublic = publication.isPublic;
