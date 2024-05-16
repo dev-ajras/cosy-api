@@ -44,6 +44,26 @@ export async function getProfile(req: RequestWithUserId, res: Response){
     res.json(profile);
 }
 
+export async function getExternalProfile(req: RequestWithUserId, res: Response){
+
+    const { profileId } = req.body
+    const profile = await userService.getProfile({id: profileId})
+    if (profile === null){
+        return res.status(404).json({message: "No se encontro un perfil del usuario solicitado"});
+    }
+    res.json(profile);
+}
+
+
+export async function getAllProfiles(req: RequestWithUserId, res: Response){
+
+    const profile = await userService.getAllProfiles()
+    if (profile === null){
+        return res.status(404).json({message: "No se encontraron perfiles"});
+    }
+    res.json(profile);
+}
+
 export async function updateProfile( req: RequestWithUserId, res: Response){
 
     const userId = req.userId!;

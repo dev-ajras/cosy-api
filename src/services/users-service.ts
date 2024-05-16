@@ -67,6 +67,22 @@ export const userService = {
             profile_image,
             background_image
         }
+    },
+    getAllProfiles: async function (){
+        const usersProfile = await User.findAll();
+        if(!usersProfile){
+            return null;
+        }
+        const allProfiles = []
+        for(const userProfile of usersProfile){
+        const { name, lastName, id } = userProfile
+        allProfiles.push({
+            id,
+            name,
+            lastName
+        })
     }
+    return allProfiles
+}
     
 }
