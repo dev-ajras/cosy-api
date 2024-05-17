@@ -75,11 +75,12 @@ export const userService = {
         }
         const allProfiles = []
         for(const userProfile of usersProfile){
-        const { name, lastName, id } = userProfile
+        const { name, lastName, id, profile_image } = userProfile
         allProfiles.push({
             id,
             name,
-            lastName
+            lastName,
+            profile_image
         })
     }
     return allProfiles
