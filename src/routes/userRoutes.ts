@@ -8,7 +8,7 @@ router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.get("/profile", authMiddleware, getProfile);
 router.put("/profile", authMiddleware, updateProfile);
-router.get("/externalProfile", getExternalProfile)
+router.post("/externalProfile", getExternalProfile)
 router.get("/allProfiles", authMiddleware, getAllProfiles)
 
 
