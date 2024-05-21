@@ -48,26 +48,12 @@ export const userService = {
         }
     },
     
-    getProfile: async function ({id_profile}:{id_profile: number}){
-        const userProfile = await User.findOne({ where: {id: id_profile}});
+    getProfile: async function ({id}: {id: number}){
+        const userProfile = await User.findOne({ where: {id: id}});
         if(!userProfile){
             return null;
         }
-        const { id, name, lastName, address, work, birthdate, school, genre, country, description, profile_image, background_image } = userProfile
-        return {
-            id,
-            name,
-            lastName,
-            address,
-            work,
-            birthdate,
-            school,
-            genre,
-            country,
-            description,
-            profile_image,
-            background_image
-        }
+        return userProfile
     },
     getAllProfiles: async function (){
         const usersProfile = await User.findAll();
